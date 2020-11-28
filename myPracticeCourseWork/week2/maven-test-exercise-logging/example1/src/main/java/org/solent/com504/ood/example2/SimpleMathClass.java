@@ -5,7 +5,6 @@
  */
 package org.solent.com504.ood.example2;
 
-import org.junit.Test;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -49,30 +48,20 @@ public class SimpleMathClass {
         }
 
         if (arguments.length != 3) {
-            throw new IllegalArgumentException("you must have 3 arguments (add|subrract) number1 number2");
+            throw new IllegalArgumentException("you must have 3 arguments (add|subtract) number1 number2");
         }
         double answer = 0;
         double number1 = Double.valueOf(arguments[1]);
         double number2 = Double.valueOf(arguments[2]);
         switch (arguments[0]) {
-		case "add":
-			answer = add(number1, number2);
-			break;
-		case "subtract":
-			answer = subtract(number1, number2);
-			break;
-		case "multiply":
-			answer = multiply(number1, number2);
-			break;
-		case "divide":
-			if (number2 == 0) {
-				throw new IllegalArgumentException("division by 0 is forbidden.");
-			} else {
-				answer = divide(number1, number2);
-				break;				
-			}
-		default:
-			throw new IllegalArgumentException("unknown argument:" + arguments[0]);
+            case "add":
+                answer = add(number1, number2);
+                break;
+            case "subtract":
+                answer = subtract(number1, number2);
+                break;
+            default:
+                throw new IllegalArgumentException("unknown argument:" + arguments[0]);
         }
         return answer;
     }
@@ -85,12 +74,14 @@ public class SimpleMathClass {
         return number1 - number2;
     }
 
+    //TODO FIX ME
     public double multiply(double number1, double number2) {
-		return number1 * number2;
+        return Double.NaN;
     }
 
+    //TODO FIX ME
     public double divide(double number1, double number2) {
-		return number1 / number2;
+        return Double.NaN;
     }
 
 }

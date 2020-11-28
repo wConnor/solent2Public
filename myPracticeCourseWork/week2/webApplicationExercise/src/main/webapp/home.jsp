@@ -14,7 +14,7 @@
 <%
     request.setAttribute("selectedPage", "home");
     String message="";
-
+    
     ShoppingService shoppingService = WebObjectFactory.getShoppingService();
 
     ShoppingCart shoppingCart = (ShoppingCart) session.getAttribute("shoppingCart");
@@ -22,10 +22,12 @@
         shoppingCart = WebObjectFactory.getNewShoppingCart();
         session.setAttribute("shoppingCart", shoppingCart);
     }
+    
+    System.out.println(shoppingCart.getTotal());
 
-    String action = (String) request.getAttribute("action");
-    String itemName = (String) request.getAttribute("itemName");
-    String itemUuid = (String) request.getAttribute("itemuuid");
+    String action = (String) request.getParameter("action");
+    String itemName = (String) request.getParameter("itemName");
+    String itemUuid = (String) request.getParameter("itemUUID");
 
     if ("addItemToCart".equals(action)) {
         message = "adding "+itemName + " to cart";
@@ -33,11 +35,11 @@
         message = "adding "+itemName + " to cart : "+shoppingItem;
         shoppingCart.addItemToCart(shoppingItem);
     }
-    if ("removeItemFromCart".equals(action)) {
+    if ("removeItemFromCart".equals(action)) { 
         message = "removing "+itemName + " from cart";
         shoppingCart.removeItemFromCart(itemUuid);
     } else {
-        message = "action="+action;
+        //message = "action="+action;
     }
 
 %>
@@ -45,7 +47,8 @@
 <!-- Begin page content -->
 <main role="main" class="container">
     <H1>Home</H1>
-    <p><%=message %><p>
+    <p><%=message %></p>
+    <p>£<%=shoppingCart.getTotal() %></p>
 
     <!-- The .table class adds basic styling (light padding and only horizontal dividers) to a table: -->     
     <H1>Available Items</H1>
@@ -92,6 +95,7 @@
             <td>
                 <!-- post avoids url encoded parameters -->
                 <form action="./home.jsp" method="get">
+                    <input type="hidden" name="itemName" value="<%=item.getName() %>">
                     <input type="hidden" name="itemUUID" value="<%=item.getUuuid()%>">
                     <input type="hidden" name="action" value="removeItemFromCart">
                     <button type="submit" >Remove Item</button>
